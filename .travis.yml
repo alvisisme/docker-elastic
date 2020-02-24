@@ -1,0 +1,29 @@
+language: shell
+os: linux
+arch: amd64
+dist: bionic
+
+services: docker
+
+branches:
+  only:
+    - master
+
+env:
+  - REPO=elasticsearch NAME=elasticsearch TAG=7.6.0
+  - REPO=kibana NAME=kibana TAG=7.6.0
+  - REPO=beats NAME=auditbeat TAG=7.6.0
+  - REPO=beats NAME=filebeat TAG=7.6.0
+  - REPO=beats NAME=heartbeat TAG=7.6.0
+  - REPO=beats NAME=journalbeat TAG=7.6.0
+  - REPO=beats NAME=metricbeat TAG=7.6.0
+  - REPO=beats NAME=packetbeat TAG=7.6.0
+  - REPO=logstash NAME=logstash TAG=7.6.0
+  - REPO=apm NAME=apm-server TAG=7.6.0
+  - REPO=app-search NAME=app-search TAG=7.6.0
+
+script:
+  - echo "$ALIYUN_PASSWORD" | docker login -u "$ALIYUN_USERNAME" --password-stdin registry.cn-hangzhou.aliyuncs.com
+  - docker pull docker.elastic.co/$REPO/$NAME:$TAG
+  - docker tag docker.elastic.co/$REPO/$NAME:$TAG registry.cn-hangzhou.aliyuncs.com/alvisisme/$NAME:$TAG
+  - docker push registry.cn-hangzhou.aliyuncs.com/alvisisme/$NAME:$TAG
