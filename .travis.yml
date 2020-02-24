@@ -23,7 +23,7 @@ env:
   - REPO=app-search NAME=app-search TAG=7.6.0
 
 script:
-  - echo "$ALIYUN_PASSWORD" | docker login -u "$ALIYUN_USERNAME" --password-stdin registry.cn-hangzhou.aliyuncs.com
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker pull docker.elastic.co/$REPO/$NAME:$TAG
-  - docker tag docker.elastic.co/$REPO/$NAME:$TAG registry.cn-hangzhou.aliyuncs.com/alvisisme/$NAME:$TAG
-  - docker push registry.cn-hangzhou.aliyuncs.com/alvisisme/$NAME:$TAG
+  - docker tag docker.elastic.co/$REPO/$NAME:$TAG alvisisme/$NAME:$TAG
+  - docker push alvisisme/$NAME:$TAG
